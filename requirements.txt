@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pydantic
+openpyxl
+curl_cffi
+beautifulsoup4
+python-multipart
+playwright
+python-dotenv

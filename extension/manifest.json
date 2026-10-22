@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "BOMTrack Clipper",
+  "version": "1.0.0",
+  "description": "1-Click BOM Clipper for Shopee & Tokopedia",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://bomtrack.test/*",
+    "http://127.0.0.1:8008/*",
+    "https://*.shopee.co.id/*",
+    "https://*.tokopedia.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

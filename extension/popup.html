@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { width: 360px; background: #0b0f19; color: #f8fafc; padding: 14px; }
+    
+    .header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #1e293b; padding-bottom: 10px; margin-bottom: 12px; }
+    .brand { font-size: 13px; font-weight: 700; color: #818cf8; display: flex; align-items: center; gap: 6px; }
+    .badge { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px; text-transform: uppercase; }
+    .badge-shopee { background: #ea580c; color: white; }
+    .badge-tokped { background: #059669; color: white; }
+    .badge-other { background: #312e81; color: #c7d2fe; }
+    
+    .card { background: #131d31; border: 1px solid #22324f; border-radius: 12px; padding: 12px; margin-bottom: 12px; }
+    .field { margin-bottom: 10px; }
+    .field:last-child { margin-bottom: 0; }
+    .label { font-size: 11px; color: #94a3b8; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; }
+    .input { width: 100%; background: #0b1120; border: 1px solid #334155; color: #f8fafc; border-radius: 6px; padding: 7px 10px; font-size: 12px; transition: 0.15s; }
+    .input:focus { outline: none; border-color: #6366f1; background: #0f172a; }
+    
+    .price-box { font-size: 15px; font-weight: 700; color: #34d399; font-family: monospace; }
+    .row { display: flex; gap: 8px; }
+    .col { flex: 1; }
+    
+    .btn { width: 100%; background: #4f46e5; color: white; border: none; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: 0.2s; }
+    .btn:hover { background: #4338ca; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    
+    .success { background: #064e3b; border: 1px solid #059669; color: #6ee7b7; padding: 8px; border-radius: 6px; font-size: 11px; margin-bottom: 10px; text-align: center; display: none; }
+    .error { background: #4c0519; border: 1px solid #be123c; color: #fecdd3; padding: 8px; border-radius: 6px; font-size: 11px; margin-bottom: 10px; display: none; }
+    .img-preview { width: 44px; height: 44px; border-radius: 6px; object-fit: cover; border: 1px solid #334155; background: #1e293b; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="brand">📦 BOMTrack Clipper</div>
+    <span class="badge badge-other" id="marketplace-badge">Detecting...</span>
+  </div>
+
+  <div id="msg-success" class="success">✅ Berhasil disimpan ke BOMTrack!</div>
+  <div id="msg-error" class="error"></div>
+
+  <div class="card">
+    <div style="display: flex; gap: 10px; margin-bottom: 10px; align-items: center;">
+      <img id="item-img" class="img-preview" src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2364748b'><rect width='24' height='24'/></svg>" />
+      <div style="flex: 1; min-width: 0;">
+        <label class="label">Nama Barang</label>
+        <input id="item-name" class="input" style="font-size: 11px;" placeholder="Nama produk..." />
+      </div>
+    </div>
+
+    <div class="row field">
+      <div class="col">
+        <label class="label">Harga Satuan (Rp)</label>
+        <input id="item-price" type="number" class="input price-box" placeholder="0" />
+      </div>
+      <div class="col" style="max-width: 80px;">
+        <label class="label">Qty Min</label>
+        <input id="item-qty" type="number" min="1" value="1" class="input" style="text-align: center;" />
+      </div>
+    </div>
+
+    <div class="row field">
+      <div class="col">
+        <label class="label">Nama Toko</label>
+        <input id="shop-name" class="input" placeholder="Nama toko..." />
+      </div>
+      <div class="col">
+        <label class="label">Lokasi Toko</label>
+        <input id="shop-loc" class="input" placeholder="Kota/Lokasi..." />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Pilih Kategori Material</label>
+      <select id="category-select" class="input">
+        <option value="Elektronik">Elektronik</option>
+        <option value="Mikrokontroler & IC">Mikrokontroler & IC</option>
+        <option value="Sensor & Modul">Sensor & Modul</option>
+        <option value="Mekanik & Rangka">Mekanik & Rangka</option>
+        <option value="Baterai & Power">Baterai & Power</option>
+        <option value="Kabel & Konektor">Kabel & Konektor</option>
+        <option value="Baut & Fastener">Baut & Fastener</option>
+        <option value="Tools & Aksesoris">Tools & Aksesoris</option>
+        <option value="Lainnya">Lainnya</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label class="label">Catatan Material</label>
+      <textarea id="item-notes" class="input" rows="2" style="resize: none; font-family: inherit;" placeholder="Spesifikasi, varian ukuran/warna, atau catatan..."></textarea>
+    </div>
+  </div>
+
+  <button id="btn-save" class="btn">
+    <span>🚀 Simpan ke Database Material</span>
+  </button>
+
+  <div style="text-align: center; margin-top: 8px;">
+    <a href="http://bomtrack.test" target="_blank" style="color: #818cf8; font-size: 11px; text-decoration: none;">
+      Buka Dashboard BOMTrack ↗
+    </a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
